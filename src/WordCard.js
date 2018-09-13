@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import './App.css';
-import CharacterCard from './CharacterCard';
 import _ from 'lodash';
+import CharacterCard from './CharacterCard';
+import './App.css';
+
 
 const prepareStateFromWord = (given_word) => {
     let word = given_word.toUpperCase()
@@ -18,10 +19,11 @@ const prepareStateFromWord = (given_word) => {
 export default class WordCard extends Component {
     constructor(props) {
         super(props)
-        this.state = {}
+        this.state = {
+        }
     }
 
-    componentWillMount(){
+    componentWillMount() {
         let data = prepareStateFromWord(this.props.value);
         this.setState({
             word: data.word,
@@ -32,18 +34,23 @@ export default class WordCard extends Component {
         })
     }
 
-    activationHandler = c => {
+    activationHandler = (c) => {
         let guess = [...this.state.guess, c]
-        this.setState({ guess })
-        if (guess.length == this.state.chars.length) {
-            if (guess.join('').toString() == this.state.word) {
-                this.setState({ 
-                    guess: [], 
-                    completed: true })
+        this.setState({
+            guess
+        })
+
+        if (guess.length === this.state.chars.length) {
+            if (this.state.word.match(guess.join('').toString())) {
+                this.setState({
+                    guess: [],
+                    completed: true
+                })
             } else {
-                this.setState({ 
-                    guess: [], 
-                    attempt: this.state.attempt + 1 })
+                this.setState({
+                    guess: [],
+                    attempt: this.state.attempt + 1
+                })
             }
         }
     }
@@ -52,9 +59,11 @@ export default class WordCard extends Component {
         console.log(this.state);
         return (
             <div>
-                {this.props.chars.map((c, i) => <CharacterCard value={c} key={i} attempt={this.state.attempt} activationHandler={this.activationHandler} />)}
+                {
+                    this.state.chars.map((c, i) => <CharacterCard value={c} key={i}/>)
+                }
             </div>
         );
     }
-    
+
 }
