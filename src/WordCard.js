@@ -42,4 +42,14 @@ export default class WordCard extends Component {
             </div>
         );
     }
+    componentWillMount(){
+        let data = prepareStateFromWord(this.props.value);
+        this.setState({
+            word: data.word,
+            chars: data.chars,
+            attempt: data.attempt,
+            guess: data.guess,
+            completed: data.completed,
+        })
+    }
 }
